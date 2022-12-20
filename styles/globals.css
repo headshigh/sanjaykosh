@@ -1,26 +1,20 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
 * {
-  box-sizing: border-box;
+  margin: 0;
+  /* background-color: hsl(202, 22%, 10%); */
+  color: rgb(255, 255, 255);
+  font-family: "Inter", sans-serif;
 }
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+input {
+  color: black;
+  padding: 0 5px;
+}
+.signle__wrapper {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.signle__wrapper:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }

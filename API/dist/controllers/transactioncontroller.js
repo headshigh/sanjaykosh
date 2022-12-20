@@ -28,6 +28,7 @@ const createtransaction = (req, res) => __awaiter(void 0, void 0, void 0, functi
     const { nameofitem, totalprice, remarks, transactionby, transactiontype } = req.body;
     console.log(req.body);
     try {
+        var date = new Date();
         const result = yield Transaction.create({
             nameofitem: nameofitem,
             totalprice: totalprice,

@@ -26,14 +26,14 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 const token = yield jwt.sign({ username, password }, "asjfkasldfj");
                 if (token) {
                     console.log(token);
-                    return res.status(200).json({ token: token });
+                    return res.status(200).json({ token: token, user: result });
                 }
                 else {
                     return res.status(500).json({ err: "unable to generate token" });
                 }
             }
             else {
-                return res.status(200).json({ msg: "wrong password" });
+                return res.status(500).json({ msg: "wrong password" });
             }
         }
     }

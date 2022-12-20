@@ -4,14 +4,14 @@ const mongoose = require("mongoose");
 const Transacton = new mongoose.Schema({
     nameofitem: {
         type: String,
-        required: [true, "name of item is required"],
+        // required: [true, "name of item is required"],
     },
     transactiontype: {
         type: String,
     },
     totalprice: {
         type: Number,
-        required: [true, "total price is required"],
+        // required: [true, "total price is required"],
     },
     remarks: {
         type: String,
