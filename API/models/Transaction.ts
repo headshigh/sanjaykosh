@@ -20,6 +20,9 @@ const Transacton = new mongoose.Schema(
     transactionby: {
       type: String,
     },
+    balanceafter: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );

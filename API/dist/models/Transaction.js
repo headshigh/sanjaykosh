@@ -19,5 +19,8 @@ const Transacton = new mongoose.Schema({
     transactionby: {
         type: String,
     },
+    balanceafter: {
+        type: Number,
+    },
 }, { timestamps: true });
 module.exports = mongoose.model("Transaction", Transacton);
