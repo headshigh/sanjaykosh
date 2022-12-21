@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios, { AxiosError } from "axios";
@@ -10,6 +10,11 @@ function Login() {
   const [error, setError] = useState();
   const [sucess, setSucess] = useState();
   const router = useRouter();
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      router.push("/");
+    }
+  }, [0]);
   const handleChange = (e: any) => {
     setInput((prevInput) => {
       return {
@@ -29,18 +34,18 @@ function Login() {
     }
   }
   console.log(hasError());
-  //   function move() {
-  //     const btn = document.getElementById("btn2");
-  //     if (hasError()) {
-  //       btn.style.left == "0px"
-  //         ? (btn.style.left = "100px")
-  //         : (btn.style.left = "0px");
-  //       btn.disabled = true;
-  //     } else {
-  //       btn.style.left = "0px";
-  //       btn.disabled = false;
-  //     }
-  //   }
+  function move() {
+    const btn = document.getElementById("btn2");
+    if (hasError()) {
+      btn.style.left == "0px"
+        ? (btn.style.left = "100px")
+        : (btn.style.left = "0px");
+      btn.disabled = true;
+    } else {
+      btn.style.left = "0px";
+      btn.disabled = false;
+    }
+  }
 
   const login = async (e: any) => {
     try {
@@ -55,7 +60,9 @@ function Login() {
       localStorage.setItem("token", user.data.token);
       localStorage.setItem("user", JSON.stringify(user.data.user));
       // console.log(user.data.user);
-      //   location.reload();
+      if (user) {
+        location.reload();
+      }
     } catch (err: any) {
       console.log(err);
       // setError(err.response.data.msg);
@@ -74,7 +81,7 @@ function Login() {
             <h1 className="text-3xl mb-3">LOGIN</h1>
             <p className="mb-1 text-lg font-normal ">
               {" "}
-              Please Login to continue.
+              You must login to continue
             </p>
             {error && (
               <p
@@ -87,47 +94,44 @@ function Login() {
             {sucess && (
               <p className="mb-1 text-lg font-normal ">Login Sucess</p>
             )}
-            <form>
-              <div className="flex justify-center flex-col">
-                <h1 style={{ color: "black" }} className="mb-1 text-base">
-                  Username
-                </h1>
-                <input
-                  onChange={handleChange}
-                  style={{ backgroundColor: "#f3e8ff" }}
-                  name="username"
-                  placeholder="nischal7200"
-                  className="border-gray-600 border px-2 py-2 "
-                  type="text"
-                  value={input.username}
-                />
-              </div>
 
-              <div className="flex justify-center flex-col mt-2">
-                <h1 style={{ color: "white" }} className="mb-1 text-base">
-                  Password
-                </h1>
-                <input
-                  onChange={handleChange}
-                  style={{ backgroundColor: "#f3e8ff" }}
-                  name="password"
-                  placeholder="1234#*@"
-                  className="border-gray-600 border px-2 py-2 "
-                  type="text"
-                />
-              </div>
+            <div className="flex justify-center flex-col mt-3">
+              <h1 className="mb-1 text-base">Username</h1>
+              <input
+                onChange={handleChange}
+                style={{ backgroundColor: "#f3e8ff" }}
+                name="username"
+                placeholder="nischal7200"
+                className="border-gray-600 border px-2 py-2 "
+                type="text"
+                value={input.username}
+              />
+            </div>
 
-              <button
-                // onMouseEnter={move}
-                onClick={login}
-                id="btn2"
-                style={{ backgroundColor: "#60BB46" }}
-                className="btn2 max-w-fit  rounded-3xl text-white px-3 py-1 ease-in	duration-150		relative mt-5"
-                type="submit"
-              >
-                Login
-              </button>
-            </form>
+            <div className="flex justify-center flex-col mt-2">
+              <h1 style={{ color: "white" }} className="mb-1 text-base">
+                Password
+              </h1>
+              <input
+                onChange={handleChange}
+                style={{ backgroundColor: "#f3e8ff" }}
+                name="password"
+                placeholder="1234#*@"
+                className="border-gray-600 border px-2 py-2 "
+                type="text"
+              />
+            </div>
+
+            <button
+              onMouseEnter={move}
+              onClick={login}
+              id="btn2"
+              style={{ backgroundColor: "#60BB46" }}
+              className="btn2 max-w-fit  rounded-3xl text-white px-3 py-1 ease-in	duration-150		relative mt-5"
+              // type="submit"
+            >
+              Login
+            </button>
           </form>{" "}
         </div>
       </div>

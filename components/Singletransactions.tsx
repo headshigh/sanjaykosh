@@ -1,6 +1,7 @@
 import React from "react";
 interface proptype {
   _id: string;
+  key: string;
   nameofitem: string;
   transactiontype: string;
   totalprice: string;
@@ -8,6 +9,7 @@ interface proptype {
   transactionby: string;
   createdAt: string;
   updatedAt: string;
+  balanceafter: number;
   __v: number;
 }
 
@@ -15,10 +17,10 @@ function sigletransaction({
   nameofitem,
   createdAt,
   updatedAt,
-  remarks,
   totalprice,
   transactiontype,
   transactionby,
+  balanceafter,
 }: proptype) {
   return (
     <div className="">
@@ -51,7 +53,7 @@ function sigletransaction({
           <div className="middle">
             <h1 className="text-lg pt-2">{nameofitem}</h1>
           </div>
-          <div className="bottom pt-2 text-lg">Balance</div>
+          <div className="bottom pt-2 text-lg">Balance:{balanceafter}</div>
         </div>
       </div>
     </div>
