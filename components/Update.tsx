@@ -20,16 +20,23 @@ function Update() {
   const [amount, setamount] = React.useState<number>();
   const [err, seterr] = useState<string>();
   const [sucess, setsucess] = useState<string>();
+
+  if (cookie.get("user")) {
+    var user = JSON.parse(cookie.get("user"));
+  } else {
+    user = "none";
+  }
+
   const data = {
     nameofitem: item,
     totalprice: total,
-    transactionby: "sarun",
+    transactionby: user.username,
     transactiontype: "withdrawl",
     jwt: cookie.get("token"),
   };
   const data2 = {
     totalprice: amount,
-    transactionby: "sarun",
+    transactionby: user.username,
     transactiontype: "deposit",
     jwt: cookie.get("token"),
   };
@@ -46,7 +53,7 @@ function Update() {
         router.push("/login?referer=/");
       } else {
         if (!item || !total) {
-          setsucess("Fill all feilds ");
+          setsucess("Please fill name of item and totalprice ");
         } else {
           const response = await axios.post(
             "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
@@ -158,7 +165,7 @@ function Update() {
                   <input
                     onChange={handletotal}
                     name="totalprice"
-                    type="number"
+                    type="number "
                     className="w-full rounded-lg h-8  "
                   />
                 </div>
