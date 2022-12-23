@@ -7,7 +7,9 @@ import Transactions from "./transactions";
 import Poput from "../components/Poput";
 import axios from "axios";
 interface props {
-  balance: number;
+  data: {
+    balance: number;
+  };
 }
 
 export default function Home(props: props) {
@@ -23,7 +25,9 @@ export default function Home(props: props) {
 }
 export async function getServerSideProps() {
   console.log("executed on server");
-  const data = await fetch("http://localhost:5000/api/balance");
+  const data = await fetch(
+    "https://uninterested-coveralls-tick.cyclic.app/api/balance"
+  );
   let myprops = await data.json();
   console.log("data" + JSON.parse(JSON.stringify(data)));
   return {

@@ -41,15 +41,18 @@ function Update() {
       if (!item || !total) {
         setsucess("Please fill name of item and totalprice ");
       } else {
-        const res = await fetch("http://localhost:5000/api/transactions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-          },
+        const res = await fetch(
+          "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
 
-          body: JSON.stringify(data),
-        }).then((result) => {
+            body: JSON.stringify(data),
+          }
+        ).then((result) => {
           result.json();
           setsucess("Transaction Sucessful");
           location.reload();
@@ -64,13 +67,16 @@ function Update() {
     if (!amount) {
       setsucess("Please fill Amount ");
     } else {
-      const response = await fetch("http://localhost:5000/api/transactions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data2),
-      }).then((result) => {
+      const response = await fetch(
+        "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data2),
+        }
+      ).then((result) => {
         result.json();
         setsucess("sucessfull");
         location.reload();

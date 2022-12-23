@@ -71,18 +71,14 @@ const getalltransaction = (req, res) => __awaiter(void 0, void 0, void 0, functi
                 },
             },
         ]);
-        function findbal() {
-            forbalance.forEach((element) => {
-                if (element._id == "deposit") {
-                    x = x + element.total;
-                }
-                else {
-                    x = x - element.total;
-                }
-                return x;
-            });
-        }
-        findbal();
+        forbalance.forEach((element) => {
+            if (element._id == "deposit") {
+                x = x + element.total;
+            }
+            else {
+                x = x - element.total;
+            }
+        });
         res.status(200).json({
             msg: result1,
             balance: x,
@@ -109,18 +105,14 @@ const createtransaction = (req, res) => __awaiter(void 0, void 0, void 0, functi
                 },
             },
         ]);
-        function findbal() {
-            forbalance.forEach((element) => {
-                if (element._id == "deposit") {
-                    x = x + element.total;
-                }
-                else {
-                    x = x - element.total;
-                }
-                return x;
-            });
-        }
-        findbal();
+        forbalance.forEach((element) => {
+            if (element._id == "deposit") {
+                x = x + element.total;
+            }
+            else {
+                x = x - element.total;
+            }
+        });
         var balanceaftertrans;
         if (transactiontype == "deposit") {
             balanceaftertrans = x + totalprice;

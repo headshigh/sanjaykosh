@@ -55,15 +55,18 @@ function Login() {
   const login = async (e: any) => {
     try {
       e.preventDefault();
-      const user = await axios.post("http://localhost:5000/api/login", {
-        username: input.username,
-        password: input.password,
-      });
+      const user = await axios.post(
+        "https://uninterested-coveralls-tick.cyclic.app/api/login",
+        {
+          username: input.username,
+          password: input.password,
+        }
+      );
       console.log(user);
       //   setSucess(true);
       //   setError(undefined);
       cookie.set("token", user.data.token);
-      cookie.set("user", JSON.stringify(user.data.user), { expires: 200 });
+      cookie.set("user", JSON.stringify(user.data.user));
       // localStorage.setItem("token", user.data.token);
       // localStorage.setItem("user", JSON.stringify(user.data.user));
       // console.log(user.data.user);

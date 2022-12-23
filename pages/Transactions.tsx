@@ -186,7 +186,7 @@ export async function getServerSideProps(context) {
 
   const name = context.query.transactionby;
   console.log("name", name);
-  // const data = fetch("http://localhost:5000/api/transactions", {
+  // const data = fetch("https://uninterested-coveralls-tick.cyclic.app/api/transactions", {
   //   method: "GET",
   //   body: JSON.stringify(dataa),
   //   headers: {
@@ -194,10 +194,11 @@ export async function getServerSideProps(context) {
   //     // 'Content-Type': 'application/x-www-form-urlencoded',
   //   },
   // }).then((result) => result.json());
+
   const data = await fetch(
     name
-      ? `http://localhost:5000/api/transactions?transactionby=${name}`
-      : "http://localhost:5000/api/transactions"
+      ? `https://uninterested-coveralls-tick.cyclic.app/api/transactions?transactionby=${name}`
+      : "https://uninterested-coveralls-tick.cyclic.app/api/transactions"
   );
   let myprops = await data.json();
   return {

@@ -1,7 +1,7 @@
 import React from "react";
 interface prop {
   isEnabled: Boolean;
-  message: String;
+  message: String | undefined;
 }
 function Poput(props: prop) {
   return props.isEnabled ? (
@@ -18,7 +18,7 @@ function Poput(props: prop) {
       </div>
     </div>
   ) : (
-    ""
+    <div></div>
   );
 }
 

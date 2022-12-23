@@ -20,17 +20,15 @@ const getbalance = async (req: Request, res: Response) => {
         },
       },
     ]);
-    function findbal() {
-      forbalance.forEach((element: obj) => {
-        if (element._id == "deposit") {
-          x = x + element.total;
-        } else {
-          x = x - element.total;
-        }
-        return x;
-      });
-    }
-    findbal();
+
+    forbalance.forEach((element: obj) => {
+      if (element._id == "deposit") {
+        x = x + element.total;
+      } else {
+        x = x - element.total;
+      }
+      return x;
+    });
 
     res.status(200).json({ balance: x });
   } catch (err) {
@@ -66,17 +64,14 @@ const getalltransaction = async (req: Request, res: Response) => {
         },
       },
     ]);
-    function findbal() {
-      forbalance.forEach((element: obj) => {
-        if (element._id == "deposit") {
-          x = x + element.total;
-        } else {
-          x = x - element.total;
-        }
-        return x;
-      });
-    }
-    findbal();
+
+    forbalance.forEach((element: obj) => {
+      if (element._id == "deposit") {
+        x = x + element.total;
+      } else {
+        x = x - element.total;
+      }
+    });
 
     res.status(200).json({
       msg: result1,
@@ -104,17 +99,15 @@ const createtransaction = async (req: Request, res: Response) => {
         },
       },
     ]);
-    function findbal() {
-      forbalance.forEach((element: obj) => {
-        if (element._id == "deposit") {
-          x = x + element.total;
-        } else {
-          x = x - element.total;
-        }
-        return x;
-      });
-    }
-    findbal();
+
+    forbalance.forEach((element: obj) => {
+      if (element._id == "deposit") {
+        x = x + element.total;
+      } else {
+        x = x - element.total;
+      }
+    });
+
     var balanceaftertrans;
     if (transactiontype == "deposit") {
       balanceaftertrans = x + totalprice;
