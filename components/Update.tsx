@@ -9,6 +9,7 @@ interface type1 {
   remarks: String;
 }
 import Poput from "./Poput";
+import axios from "axios";
 function Update() {
   const [input, setInput] = React.useState<type1>();
   const [item, setitem] = React.useState<string>();
@@ -41,47 +42,60 @@ function Update() {
       if (!item || !total) {
         setsucess("Please fill name of item and totalprice ");
       } else {
-        const res = await fetch(
+        const response = await axios.post(
           "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
+          data
+        );
+        // const res = await fetch(
+        //   "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
+        //   {
+        //     method: "POST",
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //       // 'Content-Type': 'application/x-www-form-urlencoded',
+        //     },
 
-            body: JSON.stringify(data),
-          }
-        ).then((result) => {
-          result.json();
-          setsucess("Transaction Sucessful");
-          location.reload();
-        });
-        console.log(res);
+        //     body: JSON.stringify(data),
+        //   }
+        // ).then((result) => {
+        //   result.json();
+        setsucess("Transaction Sucessful");
+        location.reload();
+        // });
+        console.log(response);
       }
-    } catch (err) {
-      console.log("err" + err);
+    } catch (error) {
+      console.log(error);
     }
   };
   const handlesubmitdeposit = async () => {
-    if (!amount) {
-      setsucess("Please fill Amount ");
-    } else {
-      const response = await fetch(
-        "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data2),
-        }
-      ).then((result) => {
-        result.json();
+    try {
+      if (!amount) {
+        setsucess("Please fill Amount ");
+      } else {
+        const response = await axios.post(
+          "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
+          data2
+        );
+        //   const response = await fetch(
+        //     "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
+        //     {
+        //       method: "POST",
+        //       headers: {
+        //         "Content-Type": "application/json",
+        //       },
+        //       body: JSON.stringify(data2),
+        //     }
+        //   ).then((result) => {
+        //     result.json();
         setsucess("sucessfull");
         location.reload();
-      });
-      console.log(response);
+        //   });
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+      // seterr(error);
     }
   };
 
