@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
 import Singletransaction from "../components/Singletransactions";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
+import arrow from "../public/arrow.png";
+import Image from "next/image";
 import Router, { useRouter } from "next/router";
+import cookie from "js-cookie";
+
+import InfiniteScroll from "react-infinite-scroll-component";
+
 interface prop {
   myprops: {
     msg: [
@@ -35,14 +41,15 @@ interface objects {
   remarks: string;
   transactionby: string;
   createdAt: string;
+  transactiontime: string;
   balanceafter: number;
   updatedAt: string;
   __v: number;
 }
-export default function Transactions(props: prop) {
+export default function transactions(props: prop) {
   const router = useRouter();
   console.log(props);
-  const [active, setActive] = React.useState<string>();
+  const [active, setActive] = React.useState<string>("All");
   let tomap: [objects] = props.myprops.msg;
   const mapped = tomap.map((element) => {
     // <Singletransaction
@@ -54,7 +61,12 @@ export default function Transactions(props: prop) {
     return <Singletransaction key={element._id} {...element} />;
   });
   console.log(mapped);
-
+  useEffect(() => {
+    console.log(router);
+    if (!cookie.get("token") || !cookie.get("user")) {
+      router.push("/login?referer=transactions");
+    }
+  });
   // console.log(mapped);
   return (
     <div
@@ -62,7 +74,8 @@ export default function Transactions(props: prop) {
       className="pb-6 min-h-screen   "
     >
       <Navbar data={props.myprops} />
-      <div className="flex overflow-x-auto md:overflow-hidden gap-4 x lg:px-32 mt-6 px-2 mt-3">
+
+      <div className="flex scrollbar  md:overflow-hidden gap-4 lg:px-32 mt-6 px-2 mt-3">
         <Link href="">
           <div
             style={
@@ -154,7 +167,14 @@ export default function Transactions(props: prop) {
           </div>
         </Link>
       </div>
-      {<div className="pt-20 px-3 md:px-64">{mapped}</div>}
+      <Image
+        onClick={() => router.push("/")}
+        style={{ width: "52px" }}
+        className="mt-3 mr-2"
+        src={arrow}
+        alt="arrow"
+      />
+      {<div className="mt-10 px-3 md:px-64">{mapped}</div>}
     </div>
   );
 }

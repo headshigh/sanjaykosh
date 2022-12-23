@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = require("mongoose");
 const Transaction = require("../models/Transaction");
+const moment = require("moment-timezone");
 const getbalance = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         var x = 0;
@@ -44,12 +45,21 @@ const getbalance = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 const getalltransaction = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const limit = 20;
     const page = Number(req.query.page) || 1;
-    const skip = (page - 1) * 20;
+    const skip = (page - 1) * limit;
     console.log("query", req.query);
     try {
-        const result = Transaction.find(req.query);
-        const result1 = yield result.sort("-createdAt").skip(skip);
+        var result;
+        if (req.query.transactionby) {
+            result = Transaction.find({
+                transactionby: req.query.transactionby,
+            });
+        }
+        else {
+            result = Transaction.find({});
+        }
+        const result1 = yield result.sort("-createdAt").skip(skip).limit(limit);
         var x = 0;
         const forbalance = yield Transaction.aggregate([
             {
@@ -118,6 +128,7 @@ const createtransaction = (req, res) => __awaiter(void 0, void 0, void 0, functi
         else {
             balanceaftertrans = x - totalprice;
         }
+        const datenepal = moment.tz(Date.now(), "Asia/Kathmandu");
         const result = yield Transaction.create({
             nameofitem: nameofitem,
             totalprice: totalprice,
@@ -125,6 +136,7 @@ const createtransaction = (req, res) => __awaiter(void 0, void 0, void 0, functi
             transactionby: transactionby,
             transactiontype: transactiontype,
             balanceafter: balanceaftertrans,
+            transactiontime: datenepal,
         });
         if (result) {
             return res.status(200).json({ result });

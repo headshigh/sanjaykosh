@@ -6,6 +6,7 @@ interface obj {
   _id: String;
   total: number;
 }
+const moment = require("moment-timezone");
 const getbalance = async (req: Request, res: Response) => {
   try {
     var x: number = 0;
@@ -38,14 +39,22 @@ const getbalance = async (req: Request, res: Response) => {
   }
 };
 const getalltransaction = async (req: Request, res: Response) => {
+  const limit = 20;
   const page: number = Number(req.query.page) || 1;
-  const skip = (page - 1) * 20;
+  const skip = (page - 1) * limit;
   console.log("query", req.query);
 
   try {
-    const result = Transaction.find(req.query);
+    var result;
+    if (req.query.transactionby) {
+      result = Transaction.find({
+        transactionby: req.query.transactionby,
+      });
+    } else {
+      result = Transaction.find({});
+    }
 
-    const result1 = await result.sort("-createdAt").skip(skip);
+    const result1 = await result.sort("-createdAt").skip(skip).limit(limit);
     var x: number = 0;
     const forbalance: [obj] = await Transaction.aggregate([
       {
@@ -112,6 +121,7 @@ const createtransaction = async (req: Request, res: Response) => {
     } else {
       balanceaftertrans = x - totalprice;
     }
+    const datenepal = moment.tz(Date.now(), "Asia/Kathmandu");
 
     const result = await Transaction.create({
       nameofitem: nameofitem,
@@ -120,6 +130,7 @@ const createtransaction = async (req: Request, res: Response) => {
       transactionby: transactionby,
       transactiontype: transactiontype,
       balanceafter: balanceaftertrans,
+      transactiontime: datenepal,
     });
     if (result) {
       return res.status(200).json({ result });

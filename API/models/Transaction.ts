@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const moment = require("moment-timezone");
 const Transacton = new mongoose.Schema(
   {
     nameofitem: {
@@ -22,6 +22,9 @@ const Transacton = new mongoose.Schema(
     },
     balanceafter: {
       type: Number,
+    },
+    transactiontime: {
+      type: String,
     },
   },
   { timestamps: true }

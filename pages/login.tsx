@@ -1,9 +1,13 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import Image from "next/image";
 import { useState } from "react";
 import axios, { AxiosError } from "axios";
 import Navbar from "../components/Navbar";
 import { useRouter } from "next/router";
+import arrow from "../public/vector.png";
+import cookie from "js-cookie";
+//get
 
 function Login() {
   const [input, setInput] = useState({ username: "", password: "" });
@@ -11,8 +15,9 @@ function Login() {
   const [sucess, setSucess] = useState();
   const router = useRouter();
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      router.push("/");
+    if (cookie.get("token") && cookie.get("user")) {
+      console.log(router.query.referer?.toString() || "/");
+      router.replace(router.query.referer?.toString() || "/");
     }
   }, [0]);
   const handleChange = (e: any) => {
@@ -57,21 +62,33 @@ function Login() {
       console.log(user);
       //   setSucess(true);
       //   setError(undefined);
-      localStorage.setItem("token", user.data.token);
-      localStorage.setItem("user", JSON.stringify(user.data.user));
+      cookie.set("token", user.data.token);
+      cookie.set("user", JSON.stringify(user.data.user), { expires: 200 });
+      // localStorage.setItem("token", user.data.token);
+      // localStorage.setItem("user", JSON.stringify(user.data.user));
       // console.log(user.data.user);
       if (user) {
         location.reload();
       }
     } catch (err: any) {
       console.log(err);
-      // setError(err.response.data.msg);
+      setError(err.response.data.msg);
     }
   };
   //   console.log(error);
   return (
     <div>
-      <Navbar />
+      <Image
+        src={arrow}
+        alt=""
+        className="absolute top-10 z-10"
+        style={{ color: "white", width: "36px", marginLeft: "10px" }}
+        onClick={() => {
+          router.back();
+        }}
+      />
+
+      {/* <Navbar  /> */}
       <div
         style={{ backgroundColor: "#141B1F" }}
         className="register__wrapper relative  flex justify-center h-screen pt-16 "
@@ -137,6 +154,12 @@ function Login() {
       </div>
     </div>
   );
+}
+export async function getServerSideProps(context) {
+  console.log("ref", context.req.header);
+  return {
+    props: {},
+  };
 }
 
 export default Login;

@@ -1,5 +1,7 @@
 import React from "react";
 import { useState } from "react";
+import cookie from "js-cookie";
+
 import "./Update.module.css";
 interface type1 {
   item: String;
@@ -20,12 +22,13 @@ function Update() {
     totalprice: total,
     transactionby: "sarun",
     transactiontype: "withdrawl",
-    remarks: remarks,
+    jwt: cookie.get("token"),
   };
   const data2 = {
     totalprice: amount,
     transactionby: "sarun",
     transactiontype: "deposit",
+    jwt: cookie.get("token"),
   };
   if (sucess) {
     setTimeout(() => {
@@ -49,6 +52,7 @@ function Update() {
         }).then((result) => {
           result.json();
           setsucess("Transaction Sucessful");
+          location.reload();
         });
         console.log(res);
       }
@@ -69,6 +73,7 @@ function Update() {
       }).then((result) => {
         result.json();
         setsucess("sucessfull");
+        location.reload();
       });
       console.log(response);
     }
@@ -122,17 +127,6 @@ function Update() {
                     name="totalprice"
                     type="number "
                     className="w-full rounded-lg h-8  "
-                  />
-                </div>
-                <div className="mb-2 ">
-                  <h1 className="label md:text-xl" style={{ color: "black" }}>
-                    Remarks
-                  </h1>
-                  <input
-                    onChange={handleremarks}
-                    name="remarks"
-                    type="text"
-                    className="w-full h-8 rounded-lg "
                   />
                 </div>
                 <button

@@ -18,3 +18,32 @@ input {
 .signle__wrapper:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
+@media screen and (max-width: 548px) {
+  .image {
+    width: 36px;
+    height: 36px;
+  }
+}
+@media screen and (min-width: 700px) {
+  .image {
+    width: 60px;
+    height: 60px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .bal {
+    flex-direction: column;
+  }
+}
+@media screen and (min-width: 401px) {
+  .bal {
+    display: flex;
+    flex-direction: row;
+  }
+}
+.scrollbar {
+  overflow-x: scroll;
+}
+.scrollbar::-webkit-scrollbar {
+  display: none;
+}

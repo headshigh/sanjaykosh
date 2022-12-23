@@ -4,6 +4,7 @@ interface proptype {
   key: string;
   nameofitem: string;
   transactiontype: string;
+  transactiontime: string;
   totalprice: string;
   remarks: string;
   transactionby: string;
@@ -15,6 +16,7 @@ interface proptype {
 
 function sigletransaction({
   nameofitem,
+  transactiontime,
   createdAt,
   updatedAt,
   totalprice,
@@ -46,7 +48,7 @@ function sigletransaction({
                   transactionby?.slice(1)}{" "}
               </h1>
 
-              <h1>{createdAt}</h1>
+              <h1>{transactiontime.slice(3, -12)}</h1>
             </div>
             <h1 className="text-xl">{totalprice}</h1>
           </div>

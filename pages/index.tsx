@@ -3,7 +3,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Navbar from "../components/Navbar";
 import Update from "../components/Update";
-import Transactions from "./Transactions";
+import Transactions from "./transactions";
 import Poput from "../components/Poput";
 import axios from "axios";
 interface props {
