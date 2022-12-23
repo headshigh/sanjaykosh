@@ -5,7 +5,7 @@ import { useState } from "react";
 import axios, { AxiosError } from "axios";
 import Navbar from "../components/Navbar";
 import { useRouter } from "next/router";
-import arrow from "../public/vector.png";
+import arrow from "../public/Vector.png";
 import cookie from "js-cookie";
 //get
 
