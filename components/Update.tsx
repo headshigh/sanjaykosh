@@ -46,7 +46,7 @@ function Update() {
         router.push("/login?referer=/");
       } else {
         if (!item || !total) {
-          setsucess("Please fill name of item and totalprice ");
+          setsucess("Fill all feilds ");
         } else {
           const response = await axios.post(
             "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
@@ -158,7 +158,7 @@ function Update() {
                   <input
                     onChange={handletotal}
                     name="totalprice"
-                    type="number "
+                    type="number"
                     className="w-full rounded-lg h-8  "
                   />
                 </div>
