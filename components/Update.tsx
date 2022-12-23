@@ -10,6 +10,8 @@ interface type1 {
 }
 import Poput from "./Poput";
 import axios from "axios";
+import { Router } from "express";
+import { useRouter } from "next/router";
 function Update() {
   const [input, setInput] = React.useState<type1>();
   const [item, setitem] = React.useState<string>();
@@ -36,65 +38,76 @@ function Update() {
       setsucess(undefined);
     }, 3000);
   }
+  const router = useRouter();
 
   const handlesubmitwithdrawl = async () => {
     try {
-      if (!item || !total) {
-        setsucess("Please fill name of item and totalprice ");
+      if (!cookie.get("token") || !cookie.get("user")) {
+        router.push("/login?referer=/");
       } else {
-        const response = await axios.post(
-          "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
-          data
-        );
-        // const res = await fetch(
-        //   "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
-        //   {
-        //     method: "POST",
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //       // 'Content-Type': 'application/x-www-form-urlencoded',
-        //     },
+        if (!item || !total) {
+          setsucess("Please fill name of item and totalprice ");
+        } else {
+          const response = await axios.post(
+            "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
+            data
+          );
+          // const res = await fetch(
+          //   "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
+          //   {
+          //     method: "POST",
+          //     headers: {
+          //       "Content-Type": "application/json",
+          //       // 'Content-Type': 'application/x-www-form-urlencoded',
+          //     },
 
-        //     body: JSON.stringify(data),
-        //   }
-        // ).then((result) => {
-        //   result.json();
-        setsucess("Transaction Sucessful");
-        location.reload();
-        // });
-        console.log(response);
+          //     body: JSON.stringify(data),
+          //   }
+          // ).then((result) => {
+          //   result.json();
+          setsucess("Transaction Sucessful");
+          location.reload();
+          // });
+          console.log(response);
+        }
       }
     } catch (error) {
       console.log(error);
+      setsucess("process failed!!");
     }
   };
   const handlesubmitdeposit = async () => {
     try {
-      if (!amount) {
-        setsucess("Please fill Amount ");
+      if (!cookie.get("user") || !cookie.get("token")) {
+        router.push("/login?referer=/");
       } else {
-        const response = await axios.post(
-          "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
-          data2
-        );
-        //   const response = await fetch(
-        //     "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
-        //     {
-        //       method: "POST",
-        //       headers: {
-        //         "Content-Type": "application/json",
-        //       },
-        //       body: JSON.stringify(data2),
-        //     }
-        //   ).then((result) => {
-        //     result.json();
-        setsucess("sucessfull");
-        location.reload();
-        //   });
-        console.log(response);
+        if (!amount) {
+          setsucess("Please fill Amount ");
+        } else {
+          const response = await axios.post(
+            "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
+            data2
+          );
+          //   const response = await fetch(
+          //     "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
+          //     {
+          //       method: "POST",
+          //       headers: {
+          //         "Content-Type": "application/json",
+          //       },
+          //       body: JSON.stringify(data2),
+          //     }
+          //   ).then((result) => {
+          //     result.json();
+          setsucess("sucessfull");
+          location.reload();
+          //   });
+          console.log(response);
+        }
       }
     } catch (error) {
       console.log(error);
+      setsucess("process failed!!");
       // seterr(error);
     }
   };
