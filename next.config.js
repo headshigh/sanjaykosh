@@ -12,5 +12,4 @@ module.exports = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
-  nextConfig,
 };
