@@ -65,8 +65,8 @@ function Login() {
       console.log(user);
       //   setSucess(true);
       //   setError(undefined);
-      cookie.set("token", user.data.token);
-      cookie.set("user", JSON.stringify(user.data.user));
+      cookie.set("token", user.data.token, { expires: 365 });
+      cookie.set("user", JSON.stringify(user.data.user), { expires: 365 });
       // localStorage.setItem("token", user.data.token);
       // localStorage.setItem("user", JSON.stringify(user.data.user));
       // console.log(user.data.user);

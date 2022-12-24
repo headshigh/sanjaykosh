@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from "axios";
 import Singletransaction from "../components/Singletransactions";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
-import arrow from "../public/arrow.png";
+import arrow from "../public/Arrow.png";
 import Image from "next/image";
 import Router, { useRouter } from "next/router";
 import cookie from "js-cookie";
