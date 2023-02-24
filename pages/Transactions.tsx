@@ -9,6 +9,12 @@ import Router, { useRouter } from "next/router";
 import cookie from "js-cookie";
 import Right from "../public/right.png";
 import Left from "../public/left.png";
+<<<<<<< HEAD:pages/Transactions.tsx
+=======
+
+import InfiniteScroll from "react-infinite-scroll-component";
+
+>>>>>>> 46ecb221bf3a5a124e3e126b4a667c47d0684a45:pages/transactions.tsx
 interface prop {
   myprops: {
     msg: [

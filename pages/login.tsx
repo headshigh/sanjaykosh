@@ -5,7 +5,7 @@ import { useState } from "react";
 import axios, { AxiosError } from "axios";
 import Navbar from "../components/Navbar";
 import { useRouter } from "next/router";
-import arrow from "../public/vector.png";
+import arrow from "../public/Vector.png";
 import cookie from "js-cookie";
 //get
 
@@ -65,10 +65,15 @@ function Login() {
       console.log(user);
       //   setSucess(true);
       //   setError(undefined);
+<<<<<<< HEAD
       var hundred = new Date(new Date().getTime() + 100 * 864000 * 1000);
 
       cookie.set("token", user.data.token, { expires: hundred });
       cookie.set("user", JSON.stringify(user.data.user), { expires: hundred });
+=======
+      cookie.set("token", user.data.token,{ expires: 365 });
+      cookie.set("user", JSON.stringify(user.data.user),{ expires: 365 });
+>>>>>>> 46ecb221bf3a5a124e3e126b4a667c47d0684a45
       // localStorage.setItem("token", user.data.token);
       // localStorage.setItem("user", JSON.stringify(user.data.user));
       // console.log(user.data.user);

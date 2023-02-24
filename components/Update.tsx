@@ -10,6 +10,8 @@ interface type1 {
 }
 import Poput from "./Poput";
 import axios from "axios";
+import { Router } from "express";
+import { useRouter } from "next/router";
 function Update() {
   const [input, setInput] = React.useState<type1>();
   const [item, setitem] = React.useState<string>();
@@ -18,16 +20,23 @@ function Update() {
   const [amount, setamount] = React.useState<number>();
   const [err, seterr] = useState<string>();
   const [sucess, setsucess] = useState<string>();
+
+  if (cookie.get("user")) {
+    var user = JSON.parse(cookie.get("user"));
+  } else {
+    user = "none";
+  }
+
   const data = {
     nameofitem: item,
     totalprice: total,
-    transactionby: "sarun",
+    transactionby: user.username,
     transactiontype: "withdrawl",
     jwt: cookie.get("token"),
   };
   const data2 = {
     totalprice: amount,
-    transactionby: "sarun",// i belive the name of transaction maker has beeb taken from jwt
+    transactionby: "sarun",
     transactiontype: "deposit",
     jwt: cookie.get("token"),
   };
@@ -36,66 +45,54 @@ function Update() {
       setsucess(undefined);
     }, 3000);
   }
+  const router = useRouter();
 
   const handlesubmitwithdrawl = async () => {
     try {
       if (!item || !total) {
         setsucess("Please fill name of item and totalprice ");
       } else {
-        const response = await axios.post(
+        const res = await fetch(
           "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
-          data
-        );
-        // const res = await fetch(
-        //   "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
-        //   {
-        //     method: "POST",
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //       // 'Content-Type': 'application/x-www-form-urlencoded',
-        //     },
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
 
-        //     body: JSON.stringify(data),
-        //   }
-        // ).then((result) => {
-        //   result.json();
-        setsucess("Transaction Sucessful");
-        location.reload();
-        // });
-        console.log(response);
+            body: JSON.stringify(data),
+          }
+        ).then((result) => {
+          result.json();
+          setsucess("Transaction Sucessful");
+          location.reload();
+        });
+        console.log(res);
       }
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log("err" + err);
     }
   };
   const handlesubmitdeposit = async () => {
-    try {
-      if (!amount) {
-        setsucess("Please fill Amount ");
-      } else {
-        const response = await axios.post(
-          "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
-          data2
-        );
-        //   const response = await fetch(
-        //     "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
-        //     {
-        //       method: "POST",
-        //       headers: {
-        //         "Content-Type": "application/json",
-        //       },
-        //       body: JSON.stringify(data2),
-        //     }
-        //   ).then((result) => {
-        //     result.json();
+    if (!amount) {
+      setsucess("Please fill Amount ");
+    } else {
+      const response = await fetch(
+        "https://uninterested-coveralls-tick.cyclic.app/api/transactions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data2),
+        }
+      ).then((result) => {
+        result.json();
         setsucess("sucessfull");
         location.reload();
-        //   });
-        console.log(response);
-      }
-    } catch (error) {
-      console.log(error);
-      // seterr(error);
+      });
+      console.log(response);
     }
   };
 
