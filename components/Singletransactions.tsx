@@ -1,4 +1,8 @@
 import React from "react";
+import delet from "../public/delete.png";
+import Image from "next/image";
+import axios from "axios";
+
 interface proptype {
   _id: string;
   key: string;
@@ -23,7 +27,14 @@ function sigletransaction({
   transactiontype,
   transactionby,
   balanceafter,
+  _id,
 }: proptype) {
+  const [transactionid, setid] = React.useState<string>(_id);
+  const hanldedelete = async () => {
+    const res = await axios.delete(
+      `https://https://uninterested-coveralls-tick.cyclic.app/api/transactions?id=${transactionid}`
+    );
+  };
   return (
     <div className="">
       <div className="signle__wrapper  mb-6 px-5 rounded-lg py-1  md:px-12 ease-out  md:mx-auto  ">
@@ -50,7 +61,17 @@ function sigletransaction({
 
               <h1>{transactiontime.slice(3, -12)}</h1>
             </div>
-            <h1 className="text-xl">{totalprice}</h1>
+            <div className="flex gap-4">
+              <h1 className="text-xl">{totalprice}</h1>
+              <Image
+                src={delet}
+                alt=""
+                className="h-9"
+                width={32}
+                height={24}
+                onClick={hanldedelete}
+              />
+            </div>
           </div>
           <div className="middle">
             <h1 className="text-lg pt-2">{nameofitem}</h1>

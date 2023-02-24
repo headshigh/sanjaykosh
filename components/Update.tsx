@@ -27,7 +27,7 @@ function Update() {
   };
   const data2 = {
     totalprice: amount,
-    transactionby: "sarun",
+    transactionby: "sarun",// i belive the name of transaction maker has beeb taken from jwt
     transactiontype: "deposit",
     jwt: cookie.get("token"),
   };

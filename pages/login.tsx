@@ -65,8 +65,10 @@ function Login() {
       console.log(user);
       //   setSucess(true);
       //   setError(undefined);
-      cookie.set("token", user.data.token, { expires: 365 });
-      cookie.set("user", JSON.stringify(user.data.user), { expires: 365 });
+      var hundred = new Date(new Date().getTime() + 100 * 864000 * 1000);
+
+      cookie.set("token", user.data.token, { expires: hundred });
+      cookie.set("user", JSON.stringify(user.data.user), { expires: hundred });
       // localStorage.setItem("token", user.data.token);
       // localStorage.setItem("user", JSON.stringify(user.data.user));
       // console.log(user.data.user);

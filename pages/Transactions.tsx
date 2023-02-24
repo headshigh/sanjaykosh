@@ -3,13 +3,12 @@ import axios, { AxiosResponse } from "axios";
 import Singletransaction from "../components/Singletransactions";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
-import arrow from "../public/Arrow.png";
+import arrow from "../public/arrow.png";
 import Image from "next/image";
 import Router, { useRouter } from "next/router";
 import cookie from "js-cookie";
-
-import InfiniteScroll from "react-infinite-scroll-component";
-
+import Right from "../public/right.png";
+import Left from "../public/left.png";
 interface prop {
   myprops: {
     msg: [
@@ -50,7 +49,9 @@ export default function transactions(props: prop) {
   const router = useRouter();
   console.log(props);
   const [active, setActive] = React.useState<string>("All");
+  const [page, setpage] = React.useState<number>(1);
   let tomap: [objects] = props.myprops.msg;
+  const totalpages = props.myprops.count / 20;
   const mapped = tomap.map((element) => {
     // <Singletransaction
     //   nameofitem={element.nameofitem}
@@ -85,6 +86,7 @@ export default function transactions(props: prop) {
             }
             onClick={() => {
               setActive("All");
+              setpage(1);
             }}
             className="signle__wrapper  capsule__wrapper px-3 py-1 flex items-center text-xl lg:text-2xl rounded-md"
           >
@@ -100,6 +102,7 @@ export default function transactions(props: prop) {
             }
             onClick={() => {
               setActive("Bikram");
+              setpage(1);
             }}
             className="signle__wrapper  capsule__wrapper px-3 py-1 flex items-center text-xl lg:text-2xl rounded-md"
           >
@@ -115,6 +118,7 @@ export default function transactions(props: prop) {
             }
             onClick={() => {
               setActive("Himal");
+              setpage(1);
             }}
             className="signle__wrapper  capsule__wrapper px-3 py-1 flex items-center text-xl lg:text-2xl rounded-md"
           >
@@ -130,6 +134,7 @@ export default function transactions(props: prop) {
             }
             onClick={() => {
               setActive("Nischal");
+              setpage(1);
             }}
             className="signle__wrapper  capsule__wrapper px-3 py-1 flex items-center text-xl lg:text-2xl rounded-md"
           >
@@ -145,6 +150,7 @@ export default function transactions(props: prop) {
             }
             onClick={() => {
               setActive("Sarun");
+              setpage(1);
             }}
             className="signle__wrapper  capsule__wrapper px-3 py-1 flex items-center text-xl lg:text-2xl rounded-md"
           >
@@ -160,6 +166,7 @@ export default function transactions(props: prop) {
             }
             onClick={() => {
               setActive("Suman");
+              setpage(1);
             }}
             className="signle__wrapper  capsule__wrapper px-3 py-1 flex items-center text-xl lg:text-2xl rounded-md"
           >
@@ -174,7 +181,52 @@ export default function transactions(props: prop) {
         src={arrow}
         alt="arrow"
       />
-      {<div className="mt-10 px-3 md:px-64">{mapped}</div>}
+      {console.log(page)}
+      {
+        <div className="mt-10 px-3 md:px-64">
+          {mapped}
+          <div className="pagination w-1/4 ml-auto flex gap-8">
+            {page !== 1 && (
+              <Image
+                src={Left}
+                width={24}
+                alt="left"
+                onClick={() => {
+                  setpage((prev) => page - 1);
+                  if (router.query.transactionby) {
+                    router.push(
+                      `?transactionby=${router.query.transactionby}&page=${
+                        page - 1
+                      }`
+                    );
+                  } else {
+                    router.push(`?page=${page - 1}`);
+                  }
+                }}
+              />
+            )}
+            {page < totalpages && (
+              <Image
+                src={Right}
+                width={24}
+                alt="right"
+                onClick={() => {
+                  setpage((prev) => page + 1);
+                  if (router.query.transactionby) {
+                    router.push(
+                      `?transactionby=${router.query.transactionby}&page=${
+                        page + 1
+                      }`
+                    );
+                  } else {
+                    router.push(`?page=${page + 1}`);
+                  }
+                }}
+              />
+            )}
+          </div>
+        </div>
+      }
     </div>
   );
 }
@@ -186,6 +238,7 @@ export async function getServerSideProps(context) {
 
   const name = context.query.transactionby;
   console.log("name", name);
+  const page = context.query.page;
   // const data = fetch("https://uninterested-coveralls-tick.cyclic.app/api/transactions", {
   //   method: "GET",
   //   body: JSON.stringify(dataa),
@@ -197,8 +250,8 @@ export async function getServerSideProps(context) {
 
   const data = await fetch(
     name
-      ? `https://uninterested-coveralls-tick.cyclic.app/api/transactions?transactionby=${name}`
-      : "https://uninterested-coveralls-tick.cyclic.app/api/transactions"
+      ? `https://uninterested-coveralls-tick.cyclic.app/api/transactions?transactionby=${name}&page=${page}`
+      : `https://uninterested-coveralls-tick.cyclic.app/api/transactions?page=${page}`
   );
   let myprops = await data.json();
   return {

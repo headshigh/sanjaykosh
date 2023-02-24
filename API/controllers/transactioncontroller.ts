@@ -51,7 +51,15 @@ const getalltransaction = async (req: Request, res: Response) => {
     } else {
       result = Transaction.find({});
     }
+    if (req.query.transactionby) {
+      var count = await Transaction.countDocuments({
+        transactionby: req.query.transactionby,
+      });
+    } else {
+      count = await Transaction.countDocuments({});
+    }
 
+    console.log(count);
     const result1 = await result.sort("-createdAt").skip(skip).limit(limit);
     var x: number = 0;
     const forbalance: [obj] = await Transaction.aggregate([
@@ -76,10 +84,17 @@ const getalltransaction = async (req: Request, res: Response) => {
     res.status(200).json({
       msg: result1,
       balance: x,
+      count: count,
     });
   } catch (err) {
     console.log(err);
   }
+};
+const deletetransaction = async (req: Request, res: Response) => {
+  const { transactionid } = req.query;
+  console.log(transactionid);
+  res.status(200).json(transactionid);
+  await Transaction.deleteOne({ _id: transactionid });
 };
 const createtransaction = async (req: Request, res: Response) => {
   //type of req
@@ -137,4 +152,9 @@ const createtransaction = async (req: Request, res: Response) => {
     res.status(500).json({ err: err });
   }
 };
-module.exports = { createtransaction, getalltransaction, getbalance };
+module.exports = {
+  createtransaction,
+  getalltransaction,
+  getbalance,
+  deletetransaction,
+};
